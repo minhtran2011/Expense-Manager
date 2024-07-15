@@ -1,0 +1,181 @@
+﻿<script type="text/javascript">
+	window.onload = function () {
+		var pieChart = new CanvasJS.Chart("pieChartContainer", {
+			theme: "light1", // "light1", "light2", "dark1", "dark2"
+			exportEnabled: false,
+			animationEnabled: true,
+			title: {
+				text: "Expense"
+			},
+			data: [{
+				type: "pie",
+				startAngle: -90,
+				toolTipContent: "<b>{label}</b>: {y}",
+				showInLegend: "true",
+				legendText: "{label}",
+				indexLabel: "{label} - {y} ₫",
+				dataPoints: @Html.Raw(ViewBag.PieDataPoints)
+			}]
+		});
+		pieChart.render();
+
+		var splineChart = new CanvasJS.Chart("splineChartContainer", {
+			animationEnabled: true,
+			theme: "light1",
+			title: {
+				text: "Income vs Expense"
+			},
+			axisX: {
+				title: "Month",
+				includeZero: false
+			},
+			axisY: {
+				title: "Amount(₫)",
+				includeZero: true
+			},
+			toolTip: {
+				shared: true
+			},
+			data: [{
+				type: "area",
+				name: "Income",
+				toolTipContent: "<b>{label}</b>: {y}",
+				color: "#4e73df",
+				markerSize: 0,
+				dataPoints: @Html.Raw(ViewBag.SplineDataPoints1)
+			},
+			{
+				type: "area",
+				name: "Expense",
+				toolTipContent: "<b>{label}</b>: {y}",
+				color: "#e74a3b",
+				markerSize: 0,
+				dataPoints: @Html.Raw(ViewBag.SplineDataPoints2)
+			}]
+		});
+		splineChart.render();
+	}
+</script>
+
+<div class="container-fluid">
+	<div class="d-sm-flex align-items-center justify-content-between mb-4"></div>
+	<div class="row">
+		<div class="col-xl-3 col-md-6 mb-4">
+			<div class="card border-left-primary shadow h-100 py-2">
+				<div class="card-body">
+					<div class="row no-gutters align-items-center">
+						<div class="col mr-2">
+							<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+								Income
+							</div>
+							<div class="h5 mb-0 font-weight-bold text-gray-800">
+								@ViewBag.ShowIncome
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-md-6 mb-4">
+			<div class="card border-left-warning shadow h-100 py-2">
+				<div class="card-body">
+					<div class="row no-gutters align-items-center">
+						<div class="col mr-2">
+							<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+								Budget
+							</div>
+							<div class="h5 mb-0 font-weight-bold text-gray-800">
+								@ViewBag.ShowBudget
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-md-6 mb-4">
+			<div class="card border-left-danger shadow h-100 py-2">
+				<div class="card-body">
+					<div class="row no-gutters align-items-center">
+						<div class="col mr-2">
+							<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+								Expense
+							</div>
+							@if (string.Compare(ViewBag.ShowExpense, ViewBag.ShowBudget) <= 0 || ViewBag.ShowExpense.Length < ViewBag.ShowBudget.Length)
+							{
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+									@ViewBag.ShowExpense
+								</div>
+							}
+							else
+							{
+								<div class="h5 mb-0 font-weight-bold text-danger">
+									@ViewBag.ShowExpense
+								</div>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-md-6 mb-4">
+			<div class="card border-left-success shadow h-100 py-2">
+				<div class="card-body">
+					<div class="row no-gutters align-items-center">
+						<div class="col mr-2">
+							<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+								Balance
+							</div>
+							<div class="h5 mb-0 font-weight-bold text-gray-800">
+								@ViewBag.ShowBalance
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xl-7 col-lg-7">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="height: 50px; width:100%">
+					<h1 class="m-0 text-primary">
+						Chart
+					</h1>
+				</div>
+				<div class="card-body">
+					<div id="splineChartContainer" style="height: 350px; width: 100%;"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-5 col-lg-5">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="height: 50px; width:100%">
+					<h1 class="m-0 text-primary">
+						Pie Chart
+					</h1>
+				</div>
+				<div class="card-body">
+					<div id="pieChartContainer" style="height: 350px; width: 100%;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<table id="myTable" class="table table-hover table-bordered table-striped" style="width:100%">
+		<thead>
+			<tr>
+				<th>Category</th>
+				<th>Date</th>
+				<th>Amount</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+	</table>
+</div>
+
+<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+@section Scripts{
+	<script src="~/js/home.js"></script>
+}
+
+

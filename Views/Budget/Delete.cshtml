@@ -1,0 +1,38 @@
+﻿@model Budget
+<div class="container">
+	<div class="card text-white bg-light border-0 mt-4">
+		<div class="card-header m-lg-0 py-3">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h2 class="text-dark text-center">Delete Budget</h2>
+				</div>
+			</div>
+		</div>
+		<div class="card-body p-4">
+			<form method="post">
+				<<input asp-for="Id" hidden />
+				<div class="form-label py-2 col-12">
+					<label asp-for="Category.Name" class=" form-label p-0 text-dark"></label>
+					<input asp-for="Category.NameWithIcon" disabled class=" form-control" />
+				</div> 
+				<div class="form-label py-2 col-12">
+					<label asp-for="Date" class=" form-label p-0 text-dark"></label>
+					<input asp-for="Date" disabled class=" form-control" />
+				</div>
+				<div class="form-label py-2 col-12">
+					<label asp-for="Amount" class=" form-label p-0 text-dark"></label>
+					<input asp-for="Amount" disabled class=" form-control" />
+				</div>
+				<div class=" row pt-2">
+					<div class="col-6">
+						<button type="submit" class=" btn btn-outline-danger form-control">DELETE</button>
+					</div>
+					<div class="col-6">
+						<a asp-controller="Budget" asp-action="Index" class=" btn btn-outline-secondary text-dark form-control">BACK</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+

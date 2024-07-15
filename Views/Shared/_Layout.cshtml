@@ -1,0 +1,105 @@
+﻿@using DoAn1.Areas.Identity.Data
+@using Microsoft.AspNetCore.Identity
+<!DOCTYPE html>
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - DoAn1</title>
+	@* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/mybootstrap.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/DoAn1.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="https://cdn.datatables.net/2.0.6/css/dataTables.dataTables.css" asp-append-version="true" />
+</head>
+<body id="page-top">
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		@if (SignInManager.IsSignedIn(User))
+		{
+			<!-- Sidebar -->
+			<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+				<!-- Sidebar - Brand -->
+				<a class="sidebar-brand d-flex align-items-center justify-content-center" asp-controller="Home" asp-action="Index">
+					<div class="sidebar-brand-icon rotate-n-15">
+						<i class="fas fa-laugh-wink"></i>
+					</div>
+					<div class="sidebar-brand-text mx-3">DoAn1</div>
+				</a>
+
+				<!-- Divider -->
+				<hr class="sidebar-divider my-0" />
+
+				<!-- Nav Item - Dashboard -->
+				<li class="nav-item">
+					<a class="nav-link align" asp-controller="Category" asp-action="Index">
+						Category
+					</a>
+				</li>
+
+				<!-- Divider -->
+				<hr class="sidebar-divider" />
+
+				<!-- Heading -->
+				<li class="nav-item">
+					<a class="nav-link align" asp-controller="Expense" asp-action="Index">
+						Expense
+					</a>
+				</li>
+
+				<hr class="sidebar-divider" />
+
+				<!-- Heading -->
+				<li class="nav-item">
+					<a class="nav-link align" asp-controller="Budget" asp-action="Index">
+						Budget
+					</a>
+				</li>
+
+				<hr class="sidebar-divider" />
+
+				<!-- Heading -->
+				<li class="nav-item">
+					<a class="nav-link align" asp-controller="Income" asp-action="Index">
+						Income
+					</a>
+				</li>
+			</ul>
+		}
+
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+				<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow ">
+					<div class="col">
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+								aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="navbar-collapse collapse d-sm-inline-flex float-right">
+							<partial name="_LoginPartial.cshtml" />
+						</div>
+					</div>
+				</nav>
+				<div class="container-fluid">
+					@RenderBody()
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="https://cdn.datatables.net/2.0.6/js/dataTables.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
